@@ -26,19 +26,22 @@ public class TelaInicial extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblTitulo = new javax.swing.JLabel();
+        lblTituloCima = new javax.swing.JLabel();
         btnCadastroAutor = new javax.swing.JButton();
         btnCadastroLivro = new javax.swing.JButton();
         btnCadastroCliente = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
+        lblTituloBaixo = new javax.swing.JLabel();
+        btnRetiradaLivro = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(600, 800));
         setSize(new java.awt.Dimension(600, 800));
 
-        lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblTitulo.setText("Biblioteca Municipal de São Leopoldo");
+        lblTituloCima.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        lblTituloCima.setText("Biblioteca Municipal");
 
-        btnCadastroAutor.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnCadastroAutor.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btnCadastroAutor.setText("Cadastro Autor");
         btnCadastroAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -46,7 +49,7 @@ public class TelaInicial extends javax.swing.JFrame {
             }
         });
 
-        btnCadastroLivro.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnCadastroLivro.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btnCadastroLivro.setText("Cadastro Livro");
         btnCadastroLivro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -54,7 +57,7 @@ public class TelaInicial extends javax.swing.JFrame {
             }
         });
 
-        btnCadastroCliente.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnCadastroCliente.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         btnCadastroCliente.setText("Cadastro Cliente");
         btnCadastroCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -62,11 +65,22 @@ public class TelaInicial extends javax.swing.JFrame {
             }
         });
 
-        btnSair.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSair.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnSair.setText("Sair");
         btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSairActionPerformed(evt);
+            }
+        });
+
+        lblTituloBaixo.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        lblTituloBaixo.setText("de São Leopoldo");
+
+        btnRetiradaLivro.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        btnRetiradaLivro.setText("Retirada de Livro");
+        btnRetiradaLivro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRetiradaLivroActionPerformed(evt);
             }
         });
 
@@ -75,36 +89,43 @@ public class TelaInicial extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnSair)
+                .addContainerGap(522, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(127, 127, 127)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnCadastroCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnCadastroLivro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnCadastroAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(lblTitulo)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnSair)))
-                .addContainerGap(30, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblTituloCima)
+                        .addGap(120, 120, 120))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(btnCadastroLivro, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnCadastroAutor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnCadastroCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnRetiradaLivro, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblTituloBaixo))
+                        .addGap(154, 154, 154))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnSair)
-                .addGap(18, 18, 18)
-                .addComponent(lblTitulo)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblTituloCima)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblTituloBaixo)
+                .addGap(28, 28, 28)
                 .addComponent(btnCadastroAutor)
                 .addGap(18, 18, 18)
                 .addComponent(btnCadastroLivro)
                 .addGap(18, 18, 18)
                 .addComponent(btnCadastroCliente)
-                .addContainerGap(283, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnRetiradaLivro)
+                .addContainerGap(116, Short.MAX_VALUE))
         );
 
         pack();
@@ -135,6 +156,13 @@ public class TelaInicial extends javax.swing.JFrame {
         
         cliente.setVisible(true);
     }//GEN-LAST:event_btnCadastroClienteActionPerformed
+
+    private void btnRetiradaLivroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetiradaLivroActionPerformed
+        
+        RetiradaLivro retirarLivro = new RetiradaLivro();
+        
+        retirarLivro.setVisible(true);
+    }//GEN-LAST:event_btnRetiradaLivroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -176,7 +204,9 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JButton btnCadastroAutor;
     private javax.swing.JButton btnCadastroCliente;
     private javax.swing.JButton btnCadastroLivro;
+    private javax.swing.JButton btnRetiradaLivro;
     private javax.swing.JButton btnSair;
-    private javax.swing.JLabel lblTitulo;
+    private javax.swing.JLabel lblTituloBaixo;
+    private javax.swing.JLabel lblTituloCima;
     // End of variables declaration//GEN-END:variables
 }
