@@ -4,13 +4,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class ConexaoDaoUsuario {
-    public Connection getConnection(){
+    public Connection getConnection() throws ClassNotFoundException{
     
         Connection conn = null;
         String className = "org.apache.derby.jdbc.ClientDriver";
         String url = "jdbc:derby://localhost:1527/bibliotecaUsuario";
-        String user = "";
-        String password = "";
+        String user = "root";
+        String password = "123";
         
         try {
             Class.forName(className);

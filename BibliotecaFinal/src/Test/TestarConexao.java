@@ -6,7 +6,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class TestarConexao {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException {
         ConexaoDaoUsuario conexaoDaoUsuario = new ConexaoDaoUsuario();
 
         try {
