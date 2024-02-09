@@ -10,8 +10,8 @@ public class ConexaoDaoAutor {
         Connection conn = null;
         String className = "org.apache.derby.jdbc.ClientDriver";
         String url = "jdbc:derby://localhost:1527/bibliotecaAutor";
-        String user = "";
-        String password = "";
+        String user = "root";
+        String password = "123";
         
         try {
             Class.forName(className);

@@ -1,8 +1,7 @@
-/*
 package DAO;
 
 
-import Model.UsuarioModel;
+import Model.ClienteModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
@@ -10,7 +9,7 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 public class DaoUsuario {
-    public void inserirClienteDAO(UsuarioModel novoUsuario) {
+    public void inserirClienteDAO(ClienteModel novoUsuario) {
         String sql = "INSERT INTO usuario (nome, cpf, email, endereco, datanascimento) VALUES(?,?,?,?,?)";
         PreparedStatement stmt = null;
         Connection connection = null;
@@ -21,10 +20,11 @@ public class DaoUsuario {
             stmt.setString(1, novoUsuario.getNome());
             stmt.setString(2, novoUsuario.getCpf());
             stmt.setString(3, novoUsuario.getEmail());
-            stmt.setString(4, novoUsuario.getEndereco());
+            stmt.setString(4, novoUsuario.getEndereço());
             stmt.setString(5, novoUsuario.getDataNascimento());
             stmt.execute();
-            JOptionPane.showMessageDialog(null, "Cadastros feito");
+            JOptionPane.showMessageDialog(null, "Cadastro de usuario Realizado com sucesso");
+            JOptionPane.showMessageDialog(null, "Dao funcionou");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Erro ao realizar registro!");
@@ -49,7 +49,7 @@ public class DaoUsuario {
             }
 
         }
+        
 }
 }
     
-*/
