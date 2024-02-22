@@ -5,7 +5,14 @@
 package View;
 
 import Controller.ClienteController;
+import Model.ClienteModel;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -24,6 +31,8 @@ public class CRUDCliente extends javax.swing.JFrame {
         txtEndereço.setEditable(false);
         txtNascimento.setEditable(false);
         txtNome.setEditable(false);
+        
+        ListarClientesView();
     }
 
     /**
@@ -54,6 +63,9 @@ public class CRUDCliente extends javax.swing.JFrame {
         btnSalvar = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
+        panelTabela = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableCliente = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(600, 800));
@@ -206,6 +218,52 @@ public class CRUDCliente extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        panelTabela.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tabela", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 18))); // NOI18N
+
+        tableCliente.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "CPF", "Nome", "Endereço", "Nascimento", "Email"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tableCliente);
+
+        javax.swing.GroupLayout panelTabelaLayout = new javax.swing.GroupLayout(panelTabela);
+        panelTabela.setLayout(panelTabelaLayout);
+        panelTabelaLayout.setHorizontalGroup(
+            panelTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTabelaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+        );
+        panelTabelaLayout.setVerticalGroup(
+            panelTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTabelaLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -221,10 +279,12 @@ public class CRUDCliente extends javax.swing.JFrame {
                                 .addGap(155, 155, 155)
                                 .addComponent(lblCadastro)))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(panelInformações, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(panelCRUD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(panelInformações, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(panelCRUD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(panelTabela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -238,7 +298,9 @@ public class CRUDCliente extends javax.swing.JFrame {
                 .addComponent(panelInformações, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelCRUD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(294, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelTabela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -253,6 +315,30 @@ public class CRUDCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmailActionPerformed
 
+ void ListarClientesView() {
+        try {
+            DefaultTableModel dtm = (DefaultTableModel) tableCliente.getModel();
+            dtm.setRowCount(0);
+            ClienteController clienteController = new ClienteController();
+
+            ArrayList<ClienteModel> listaCliente = clienteController.listarClientesController();
+
+            Iterator<ClienteModel> iterator = listaCliente.iterator();
+            while (iterator.hasNext()) {
+                ClienteModel cliente = iterator.next();
+                dtm.addRow(new Object[]{
+                    cliente.getId(),
+                    cliente.getCpf(),
+                    cliente.getNome(),
+                    cliente.getEmail(),
+                    cliente.getEndereço(),
+                    cliente.getDataNascimento()
+                });
+            }
+
+        } catch (Exception e) {
+        }
+    }
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         
         txtCPF.setText("");
@@ -292,20 +378,42 @@ public class CRUDCliente extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         
-        String cpf = txtCPF.getText();
-        String nome = txtNome.getText();
-        String endereço = txtEndereço.getText();
-        String dataNascimento = txtNascimento.getText();
-        String email = txtEmail.getText();
+        LocalDate checagem = LocalDate.now();
+        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String dataNascimentoDigitada = txtNascimento.getText();
         
-        ClienteController novoCliente = new ClienteController();
-        novoCliente.cadastrarClienteController(cpf, nome, endereço, dataNascimento, email);
+        LocalDate dataNascimentoFormatada = 
+                LocalDate.parse(dataNascimentoDigitada, formatador);
         
-        txtCPF.setText("");
-        txtEmail.setText("");
-        txtEndereço.setText("");
-        txtNascimento.setText("");
-        txtNome.setText("");
+        long anosDeDiferenca = dataNascimentoFormatada.until(checagem, ChronoUnit.YEARS);
+        
+        if(anosDeDiferenca>=14){
+            
+            String cpf = txtCPF.getText();
+            String nome = txtNome.getText();
+            String endereço = txtEndereço.getText();
+            String dataNascimento = txtNascimento.getText();
+            String email = txtEmail.getText();
+        
+            ClienteController novoCliente = new ClienteController();
+            novoCliente.cadastrarClienteController(cpf, nome, endereço, dataNascimento, email);
+        
+            txtCPF.setText("");
+            txtEmail.setText("");
+            txtEndereço.setText("");
+            txtNascimento.setText("");
+            txtNome.setText("");
+        
+        } else {
+            
+            JOptionPane.showMessageDialog(null, "Você precisa ter mais que 14 anos para ser cadastrado");
+            
+            txtCPF.setText("");
+            txtEmail.setText("");
+            txtEndereço.setText("");
+            txtNascimento.setText("");
+            txtNome.setText("");
+        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     /**
@@ -350,6 +458,7 @@ public class CRUDCliente extends javax.swing.JFrame {
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnVoltar;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCPF;
     private javax.swing.JLabel lblCadastro;
     private javax.swing.JLabel lblEmail;
@@ -358,6 +467,8 @@ public class CRUDCliente extends javax.swing.JFrame {
     private javax.swing.JLabel lblNome;
     private javax.swing.JPanel panelCRUD;
     private javax.swing.JPanel panelInformações;
+    private javax.swing.JPanel panelTabela;
+    private javax.swing.JTable tableCliente;
     private javax.swing.JTextField txtCPF;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtEndereço;
@@ -365,3 +476,4 @@ public class CRUDCliente extends javax.swing.JFrame {
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
 }
+

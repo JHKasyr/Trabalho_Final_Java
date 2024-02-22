@@ -1,6 +1,7 @@
 package Model;
 
 import DAO.DaoUsuario;
+import java.util.ArrayList;
 
 public class ClienteModel {
     
@@ -83,5 +84,8 @@ public class ClienteModel {
         public void cadastrarClienteDAO(ClienteModel novoCliente) {
         DaoUsuario novoRegistro = new DaoUsuario();
         novoRegistro.inserirClienteDAO(novoCliente);
+    }
+    public ArrayList<ClienteModel> buscarCliente() {
+    return new DaoUsuario().listarTodosClientesTabela();
     }
 }

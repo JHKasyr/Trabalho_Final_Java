@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.ClienteModel;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class ClienteController {
@@ -19,5 +20,9 @@ public class ClienteController {
             
             JOptionPane.showMessageDialog(null, "Digite os dados corretamente!");
         }
+    }
+        public ArrayList<ClienteModel> listarClientesController(){
+        ClienteModel Cliente = new ClienteModel();
+        return Cliente.buscarCliente();
     }
 }

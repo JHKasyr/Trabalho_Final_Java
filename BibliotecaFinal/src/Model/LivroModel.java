@@ -1,6 +1,7 @@
 package Model;
 
 import DAO.DaoLivro;
+import java.util.ArrayList;
 
 public class LivroModel {
     
@@ -72,5 +73,8 @@ public class LivroModel {
          public void cadastrarLivroDAO(LivroModel novoLivro) {
          DaoLivro novoRegistro = new DaoLivro();
         novoRegistro.inserirLivroDAO(novoLivro);
+    }
+    public ArrayList<LivroModel> buscarLivro() {
+    return new DaoLivro().listarTodosLivrosTabela();
     }
 }

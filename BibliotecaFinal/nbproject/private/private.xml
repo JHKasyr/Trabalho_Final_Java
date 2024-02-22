@@ -3,23 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/DAO/DaoItem.java</file>
             <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/View/TelaInicial.java</file>
-            <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/DAO/DaoLivro.java</file>
+            <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/View/RetiradaLivro.java</file>
             <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/Model/ClienteModel.java</file>
-            <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/Controller/AutorController.java</file>
-            <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/View/CRUDLivro.java</file>
             <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/DAO/DaoUsuario.java</file>
-            <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/DAO/ConexaoDaoItem.java</file>
-            <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/Controller/ClienteController.java</file>
-            <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/DAO/ConexaoDaoUsuario.java</file>
-            <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/DAO/ConexaoDaoLivro.java</file>
-            <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/DAO/ConexaoDaoAutor.java</file>
-            <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/Model/LivroModel.java</file>
             <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/View/CRUDCliente.java</file>
-            <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/Controller/LivroController.java</file>
-            <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/DAO/DaoAutor.java</file>
-            <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/Model/AutorModel.java</file>
+            <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/Controller/ClienteController.java</file>
         </group>
     </open-files>
 </project-private>

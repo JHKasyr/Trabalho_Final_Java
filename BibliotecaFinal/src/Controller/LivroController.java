@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.LivroModel;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class LivroController {
@@ -18,5 +19,9 @@ public class LivroController {
             
             JOptionPane.showMessageDialog(null, "Digite os dados corretamente!");
         }
+    }
+         public ArrayList<LivroModel> listarLivrosController(){
+        LivroModel Livro = new LivroModel();
+        return Livro.buscarLivro();
     }
 }

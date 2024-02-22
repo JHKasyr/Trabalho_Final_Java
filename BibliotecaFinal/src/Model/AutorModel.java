@@ -1,6 +1,7 @@
 package Model;
 
 import DAO.DaoAutor;
+import java.util.ArrayList;
 
 public class AutorModel {
     
@@ -50,5 +51,8 @@ public class AutorModel {
      public void cadastrarAutorDAO(AutorModel novoAutor) {
          DaoAutor novoRegistro = new DaoAutor();
         novoRegistro.inserirAutorDAO(novoAutor);
+    }
+     public ArrayList<AutorModel> buscarAutor() {
+    return new DaoAutor().listarTodosAutoresTabela();
     }
 }

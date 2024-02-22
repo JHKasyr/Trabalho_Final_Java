@@ -49,7 +49,58 @@ public class DaoUsuario {
             }
 
         }
+    }
         
+    public ArrayList<ClienteModel> listarTodosClientesTabela() {
+
+        ResultSet rs = null;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        ClienteModel cliente = null;
+        ArrayList<ClienteModel> listaClientes = null;
+
+        String sql = "SELECT * FROM ROOT.usuario";
+
+        try {
+            conn = new ConexaoDaoUsuario().getConnection();
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            if (rs != null) {
+                listaClientes = new ArrayList<>();
+                while (rs.next()) {
+                    cliente = new ClienteModel();
+                    cliente.setId(rs.getInt("codigo"));
+                    cliente.setCpf(rs.getString("cpf"));
+                    cliente.setNome(rs.getString("nome"));
+                    cliente.setEmail(rs.getString("email"));
+                    cliente.setEndereço(rs.getString("Endereco"));
+                    cliente.setDataNascimento(rs.getString("dataNascimento"));
+                    listaClientes.add(cliente);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Erro ao realizar regitro!");
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (Exception e) {
+                System.out.println("Erro ao finalizar steatment!");
+                e.printStackTrace();
+            }
+
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                System.out.println("Erro ao finalizar conexao com o banco de dados!");
+                e.printStackTrace();
+            }
+        }
+        return listaClientes;
+    }  
 }
-}
-    
