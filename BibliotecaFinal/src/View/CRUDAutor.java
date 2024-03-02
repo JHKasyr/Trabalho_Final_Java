@@ -5,9 +5,7 @@
 package View;
 
 import Controller.AutorController;
-import Controller.LivroController;
 import Model.AutorModel;
-import Model.LivroModel;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JOptionPane;
@@ -57,7 +55,6 @@ public class CRUDAutor extends javax.swing.JFrame {
         tableAutor = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(600, 800));
         setSize(new java.awt.Dimension(600, 800));
 
         btnVoltar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -139,9 +136,19 @@ public class CRUDAutor extends javax.swing.JFrame {
 
         btnAlterar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelCRUDLayout = new javax.swing.GroupLayout(panelCRUD);
         panelCRUD.setLayout(panelCRUDLayout);
@@ -201,6 +208,11 @@ public class CRUDAutor extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tableAutor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableAutorMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tableAutor);
@@ -272,6 +284,7 @@ public class CRUDAutor extends javax.swing.JFrame {
         
         txtNome.setEditable(true);
         txtNacionalidade.setEditable(true);
+        listarAutoresView();
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -300,7 +313,43 @@ public class CRUDAutor extends javax.swing.JFrame {
         
         txtNome.setText("");
         txtNacionalidade.setText("");
+        listarAutoresView();
+        
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+                     
+        int id = enviarId();
+        
+        AutorController excluirAutor = new AutorController();
+        excluirAutor.excluirAutor(id);
+        txtNome.setText("");
+        txtNacionalidade.setText("");
+        listarAutoresView();            
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        int id = enviarId();
+        String nome = txtNome.getText();
+        String nacionalidade = txtNacionalidade.getText();
+        
+                
+        AutorController alterarAutor = new AutorController();
+        alterarAutor.alterarAutorController(id,nome, nacionalidade);
+        
+        listarAutoresView();
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void tableAutorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableAutorMouseClicked
+        int idAux = Integer.parseInt(tableAutor.getModel().getValueAt(tableAutor.getSelectedRow(), 0).toString());
+        String nome = tableAutor.getModel().getValueAt(tableAutor.getSelectedRow(), 1).toString();
+        String nacionalidade = tableAutor.getModel().getValueAt(tableAutor.getSelectedRow(), 2).toString();
+        
+        
+        
+        txtNome.setText(nome);
+        txtNacionalidade.setText(nacionalidade);
+    }//GEN-LAST:event_tableAutorMouseClicked
 
     void listarAutoresView() {
         try {
@@ -360,6 +409,10 @@ public class CRUDAutor extends javax.swing.JFrame {
             }
         });
     }
+        private int enviarId(){
+           int idAux = Integer.parseInt(tableAutor.getModel().getValueAt(tableAutor.getSelectedRow(), 0).toString()); 
+           return idAux;
+        }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;

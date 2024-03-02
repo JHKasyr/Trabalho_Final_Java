@@ -2,6 +2,7 @@ package Model;
 
 import DAO.DaoLivro;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class LivroModel {
     
@@ -76,5 +77,12 @@ public class LivroModel {
     }
     public ArrayList<LivroModel> buscarLivro() {
     return new DaoLivro().listarTodosLivrosTabela();
+    }
+    public void alterarLivroModel(LivroModel alterarLivro) {
+        new DaoLivro().alterarLivro(alterarLivro);
+    }
+
+    public void excluirLivro(int id) {
+        new DaoLivro().excluirLivro(id);
     }
 }

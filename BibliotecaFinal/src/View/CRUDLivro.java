@@ -22,7 +22,7 @@ public class CRUDLivro extends javax.swing.JFrame {
      */
     public CRUDLivro() {
         initComponents();
-        
+
         txtTitulo.setEditable(false);
         txtGenero.setEditable(false);
         txtPaginas.setEditable(false);
@@ -61,7 +61,6 @@ public class CRUDLivro extends javax.swing.JFrame {
         tableLivro = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(600, 800));
         setSize(new java.awt.Dimension(600, 800));
 
         btnVoltar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -166,9 +165,19 @@ public class CRUDLivro extends javax.swing.JFrame {
 
         btnAlterar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelCRUDLayout = new javax.swing.GroupLayout(panelCRUD);
         panelCRUD.setLayout(panelCRUDLayout);
@@ -226,6 +235,11 @@ public class CRUDLivro extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tableLivro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableLivroMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tableLivro);
@@ -290,17 +304,17 @@ public class CRUDLivro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
-       
+
         this.setVisible(false);
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-        
+
         txtTitulo.setText("");
         txtGenero.setText("");
         txtPaginas.setText("");
         txtResumo.setText("");
-        
+
         txtTitulo.setEditable(true);
         txtGenero.setEditable(true);
         txtPaginas.setEditable(true);
@@ -308,42 +322,82 @@ public class CRUDLivro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        
+
         int valor = JOptionPane.showConfirmDialog(null,
                 "Deseja realmente cancelar?",
                 "Confirma Exclusão",
                 JOptionPane.YES_NO_OPTION);
 
         if (valor == 0) {
-        txtTitulo.setText("");
-        txtGenero.setText("");
-        txtPaginas.setText("");
-        txtResumo.setText("");
-        
-        txtTitulo.setEditable(false);
-        txtGenero.setEditable(false);
-        txtPaginas.setEditable(false);
-        txtResumo.setEditable(false);            
+            txtTitulo.setText("");
+            txtGenero.setText("");
+            txtPaginas.setText("");
+            txtResumo.setText("");
+
+            txtTitulo.setEditable(false);
+            txtGenero.setEditable(false);
+            txtPaginas.setEditable(false);
+            txtResumo.setEditable(false);
         }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        
+
         String titulo = txtTitulo.getText();
         String genero = txtGenero.getText();
         String paginas = txtPaginas.getText();
         String resumo = txtResumo.getText();
-        
+
         LivroController novoLivro = new LivroController();
         novoLivro.cadastrarLivroController(titulo, genero, paginas, resumo);
-        
+
         txtTitulo.setText("");
         txtGenero.setText("");
         txtPaginas.setText("");
         txtResumo.setText("");
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-     void listarLivrosView() {
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+
+        int id = enviarId();
+        
+        LivroController excluirLivro = new LivroController();
+        excluirLivro.excluirLivro(id);
+        txtPaginas.setText("");
+        txtResumo.setText("");
+        txtGenero.setText("");
+        listarLivrosView();
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        int id = enviarId();
+        String titulo = txtTitulo.getText();
+        String genero = txtGenero.getText();
+        String paginas = txtPaginas.getText();
+        String sinopse = txtResumo.getText();
+        
+                
+        LivroController alterarLivro = new LivroController();
+        alterarLivro.alterarLivroController(id,titulo, genero, paginas, sinopse);
+        
+        listarLivrosView();
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void tableLivroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableLivroMouseClicked
+        int idAux = Integer.parseInt(tableLivro.getModel().getValueAt(tableLivro.getSelectedRow(), 0).toString());
+        String titulo = tableLivro.getModel().getValueAt(tableLivro.getSelectedRow(), 1).toString();
+        String genero = tableLivro.getModel().getValueAt(tableLivro.getSelectedRow(), 2).toString();
+        String paginas = tableLivro.getModel().getValueAt(tableLivro.getSelectedRow(), 3).toString();
+        String sinopse = tableLivro.getModel().getValueAt(tableLivro.getSelectedRow(), 4).toString();
+        
+        
+        txtTitulo.setText(titulo);
+        txtGenero.setText(genero);
+        txtPaginas.setText(paginas);
+        txtResumo.setText(sinopse);
+    }//GEN-LAST:event_tableLivroMouseClicked
+
+    void listarLivrosView() {
         try {
             DefaultTableModel dtm = (DefaultTableModel) tableLivro.getModel();
             dtm.setRowCount(0);
@@ -366,6 +420,7 @@ public class CRUDLivro extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -400,6 +455,12 @@ public class CRUDLivro extends javax.swing.JFrame {
             }
         });
     }
+
+    private int enviarId() {
+        int idAux = Integer.parseInt(tableLivro.getModel().getValueAt(tableLivro.getSelectedRow(), 0).toString());
+        return idAux;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;

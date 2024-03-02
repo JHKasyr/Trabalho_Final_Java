@@ -68,7 +68,6 @@ public class CRUDCliente extends javax.swing.JFrame {
         tableCliente = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(600, 800));
         setSize(new java.awt.Dimension(600, 800));
 
         btnVoltar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -184,9 +183,19 @@ public class CRUDCliente extends javax.swing.JFrame {
 
         btnAlterar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelCRUDLayout = new javax.swing.GroupLayout(panelCRUD);
         panelCRUD.setLayout(panelCRUDLayout);
@@ -244,6 +253,11 @@ public class CRUDCliente extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tableCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableClienteMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tableCliente);
@@ -330,10 +344,11 @@ public class CRUDCliente extends javax.swing.JFrame {
                     cliente.getId(),
                     cliente.getCpf(),
                     cliente.getNome(),
-                    cliente.getEmail(),
                     cliente.getEndereço(),
-                    cliente.getDataNascimento()
+                    cliente.getDataNascimento(),
+                    cliente.getEmail()
                 });
+                        
             }
 
         } catch (Exception e) {
@@ -389,8 +404,8 @@ public class CRUDCliente extends javax.swing.JFrame {
         
         if(anosDeDiferenca>=14){
             
-            String cpf = txtCPF.getText();
             String nome = txtNome.getText();
+            String cpf = txtCPF.getText();
             String endereço = txtEndereço.getText();
             String dataNascimento = txtNascimento.getText();
             String email = txtEmail.getText();
@@ -414,7 +429,58 @@ public class CRUDCliente extends javax.swing.JFrame {
             txtNascimento.setText("");
             txtNome.setText("");
         }
+                
+        ListarClientesView();
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+                            
+        int id = enviarId();
+        
+        ClienteController excluirCliente = new ClienteController();
+        excluirCliente.excluirCliente(id);
+        txtEndereço.setText("");
+        txtEmail.setText("");
+        txtNome.setText("");
+        ListarClientesView();              
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        
+        int idAux = enviarId();
+        String nome = txtNome.getText();
+        String cpf = txtCPF.getText();
+        String endereco = txtEndereço.getText();
+        String dataNascimento = txtNascimento.getText();
+        String email = txtEmail.getText();
+        capturaDados();
+        preencheDados();
+        
+        ClienteController alterarDados = new ClienteController();
+        alterarDados.alterarClienteController(idAux, nome, cpf, email, endereco, dataNascimento);
+        ListarClientesView();
+        
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void tableClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableClienteMouseClicked
+                                          
+        String nome = tableCliente.getModel().getValueAt(tableCliente.getSelectedRow(), 2).toString();
+        String cpf = tableCliente.getModel().getValueAt(tableCliente.getSelectedRow(), 1).toString();
+        String endereco = tableCliente.getModel().getValueAt(tableCliente.getSelectedRow(), 3).toString();
+        String nascimento = tableCliente.getModel().getValueAt(tableCliente.getSelectedRow(), 4).toString();
+        String email = tableCliente.getModel().getValueAt(tableCliente.getSelectedRow(), 5).toString();
+        
+        
+        
+        txtNome.setText(nome);
+        txtCPF.setText(cpf);
+        txtEndereço.setText(endereco);
+        txtNascimento.setText(nascimento);
+        txtEmail.setText(email);
+        
+        txtNascimento.setEditable(false);
+        txtCPF.setEditable(false);                        
+    }//GEN-LAST:event_tableClienteMouseClicked
 
     /**
      * @param args the command line arguments
@@ -450,6 +516,33 @@ public class CRUDCliente extends javax.swing.JFrame {
             }
         });
     }
+    private void capturaDados(){
+    // Obtenha os dados dos campos de texto
+        String nome = txtNome.getText();
+        String cpf = txtCPF.getText();
+        String endereco = txtEndereço.getText();
+        String dataNascimento = txtNascimento.getText();
+        String email = txtEmail.getText();
+
+}
+    private void preencheDados(){
+    // Obtenha os dados dos campos de texto
+        String nome = txtNome.getText();
+        String cpf = txtCPF.getText();
+        String endereco = txtEndereço.getText();
+        String dataNascimento = txtNascimento.getText();
+        String email = txtEmail.getText();
+        
+        txtNome.setText(nome);
+        txtCPF.setText(cpf);
+        txtEndereço.setText(endereco);
+        txtNascimento.setText(dataNascimento);
+        txtEmail.setText(email);
+    }
+    private int enviarId(){
+        int idAux = Integer.parseInt(tableCliente.getModel().getValueAt(tableCliente.getSelectedRow(), 0).toString()); 
+        return idAux;
+        }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;

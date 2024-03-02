@@ -2,6 +2,7 @@ package Model;
 
 import DAO.DaoAutor;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class AutorModel {
     
@@ -54,5 +55,12 @@ public class AutorModel {
     }
      public ArrayList<AutorModel> buscarAutor() {
     return new DaoAutor().listarTodosAutoresTabela();
+    }
+      public void alterarAutorModel(AutorModel alterarAutor) {
+        new DaoAutor().alterarAutor(alterarAutor);
+    }
+
+    public void excluirCliente(int id) {
+        new DaoAutor().excluirAutor(id);
     }
 }

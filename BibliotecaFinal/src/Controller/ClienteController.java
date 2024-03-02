@@ -25,4 +25,23 @@ public class ClienteController {
         ClienteModel Cliente = new ClienteModel();
         return Cliente.buscarCliente();
     }
+        public void alterarClienteController(int id, String nome, String cpf, String email, String endereco,  String dataNascimento){
+        if((id != 0) &&
+                (nome != null && nome.length() > 0)
+                && (cpf != null && cpf.length() > 0)
+                && (email != null && email.length() > 0)
+                && (endereco != null && endereco.length() > 0)
+                && (dataNascimento != null && dataNascimento.length() > 0)) {
+            
+            ClienteModel clienteAjuste = new ClienteModel(id, cpf, nome, endereco, dataNascimento, email);
+            clienteAjuste.alterarClienteModel(clienteAjuste);
+            JOptionPane.showMessageDialog(null, "chgando ate controller cliente");
+        }
+    }
+            
+    public void excluirCliente(int id){
+        ClienteModel idUsuario = new ClienteModel();
+        idUsuario.excluirCliente(id);
+        JOptionPane.showMessageDialog(null, "chgando ate controller cliente");
+    }
 }

@@ -22,4 +22,20 @@ public class AutorController {
         AutorModel Livro = new AutorModel();
         return Livro.buscarAutor();
     }
+     public void alterarAutorController(int id, String nome, String nacionalidade){
+        if ((id != 0) &&
+                (nome != null && nome.length() > 0)
+                && (nacionalidade != null && nacionalidade.length() > 0)){
+               
+            AutorModel alterarAutor = new AutorModel(id, nome, nacionalidade);
+            alterarAutor.alterarAutorModel(alterarAutor);
+            JOptionPane.showMessageDialog(null, "chgando ate controller cliente");
+        }
+    }
+            
+    public void excluirAutor(int id){
+        AutorModel idAutor = new AutorModel();
+        idAutor.excluirCliente(id);
+        JOptionPane.showMessageDialog(null, "chgando ate controller cliente");
+    }
 }

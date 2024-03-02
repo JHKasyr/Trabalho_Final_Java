@@ -2,6 +2,7 @@ package Model;
 
 import DAO.DaoUsuario;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class ClienteModel {
     
@@ -87,5 +88,13 @@ public class ClienteModel {
     }
     public ArrayList<ClienteModel> buscarCliente() {
     return new DaoUsuario().listarTodosClientesTabela();
+    }
+    
+    public void alterarClienteModel(ClienteModel alterarCliente) {
+        new DaoUsuario().alterarCliente(alterarCliente);
+    }
+
+    public void excluirCliente(int id) {
+        new DaoUsuario().excluirCliente(id);
     }
 }
