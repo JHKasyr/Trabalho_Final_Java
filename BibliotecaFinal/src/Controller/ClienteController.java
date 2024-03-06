@@ -14,7 +14,7 @@ public class ClienteController {
                 (dataNascimento != null && dataNascimento.length()>0) &&
                 (email != null && email.length()>0)){
             
-            ClienteModel novoCliente = new ClienteModel(cpf, nome, endereço, dataNascimento, email);
+            ClienteModel novoCliente = new ClienteModel(cpf, nome, endereço, dataNascimento, email, false);
             novoCliente.cadastrarClienteDAO(novoCliente);
         } else {           
             
@@ -33,7 +33,7 @@ public class ClienteController {
                 && (endereco != null && endereco.length() > 0)
                 && (dataNascimento != null && dataNascimento.length() > 0)) {
             
-            ClienteModel clienteAjuste = new ClienteModel(id, cpf, nome, endereco, dataNascimento, email);
+            ClienteModel clienteAjuste = new ClienteModel(id, cpf, nome, endereco, dataNascimento, email, false);
             clienteAjuste.alterarClienteModel(clienteAjuste);
             JOptionPane.showMessageDialog(null, "chgando ate controller cliente");
         }
@@ -43,5 +43,11 @@ public class ClienteController {
         ClienteModel idUsuario = new ClienteModel();
         idUsuario.excluirCliente(id);
         JOptionPane.showMessageDialog(null, "chgando ate controller cliente");
+    }
+    
+        public ArrayList<ClienteModel> searchClient(int id){
+        ClienteModel contato = new ClienteModel();
+        JOptionPane.showMessageDialog(null, "chegando até controller");
+        return contato.searchCliente(id);
     }
 }

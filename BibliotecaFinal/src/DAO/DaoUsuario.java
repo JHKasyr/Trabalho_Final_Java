@@ -24,7 +24,6 @@ public class DaoUsuario {
             stmt.setString(5, novoUsuario.getDataNascimento());
             stmt.execute();
             JOptionPane.showMessageDialog(null, "Cadastro de usuario Realizado com sucesso");
-            JOptionPane.showMessageDialog(null, "Dao funcionou");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Erro ao realizar registro!");
@@ -76,6 +75,7 @@ public class DaoUsuario {
                     cliente.setEmail(rs.getString("email"));
                     cliente.setEndereço(rs.getString("Endereco"));
                     cliente.setDataNascimento(rs.getString("dataNascimento"));
+                    cliente.setStatus(rs.getBoolean("Status"));
                     listaClientes.add(cliente);
                 }
             }
@@ -161,5 +161,55 @@ public class DaoUsuario {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erro ao realizar exclusão de dados " + e);
         }
+    }
+        public ArrayList<ClienteModel> searchModel(int id) {
+
+        ResultSet rs = null;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        ClienteModel cliente = null;
+        ArrayList<ClienteModel> listaClientes = null;
+
+        String sql = "SELECT codigo, nome, status FROM ROOT.USUARIO WHERE codigo LIKE '%"+id+"%' ORDER BY codigo";
+
+        try {
+            conn = new ConexaoDaoUsuario().getConnection();
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            if (rs != null) {
+                listaClientes = new ArrayList<>();
+                while (rs.next()) {
+                    cliente = new ClienteModel();
+                    cliente.setId(rs.getInt("codigo"));
+                    cliente.setNome(rs.getString("nome"));
+                    cliente.setStatus(rs.getBoolean("status"));
+                    listaClientes.add(cliente);
+                }
+            }
+            JOptionPane.showMessageDialog(null, "chegando ate dao");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Erro ao realizar regitro!");
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (Exception e) {
+                System.out.println("Erro ao finalizar steatment!");
+                e.printStackTrace();
+            }
+
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                System.out.println("Erro ao finalizar conexao com o banco de dados!");
+                e.printStackTrace();
+            }
+        }
+        return listaClientes;
     }
 }

@@ -4,7 +4,6 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/DAO/DaoItem.java</file>
-            <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/View/tste.java</file>
             <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/View/CRUDAutor.java</file>
             <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/View/TelaInicial.java</file>
             <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/Model/ClienteModel.java</file>
@@ -15,6 +14,7 @@
             <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/Controller/ClienteController.java</file>
             <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/DAO/ConexaoDaoItem.java</file>
             <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/DAO/ConexaoDaoLivro.java</file>
+            <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/DAO/ConexaoDaoUsuario.java</file>
             <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/DAO/ConexaoDaoAutor.java</file>
             <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/Model/LivroModel.java</file>
             <file>file:/C:/Users/jose5/Documents/NetBeansProjects/Trabalho_Final_Java/BibliotecaFinal/src/View/CRUDCliente.java</file>

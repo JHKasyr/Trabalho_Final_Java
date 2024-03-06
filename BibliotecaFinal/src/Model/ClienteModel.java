@@ -12,26 +12,29 @@ public class ClienteModel {
     String endereço;
     String dataNascimento;
     String email;
+    boolean status;
     
     // Construtores
     public ClienteModel() {
     }
 
-    public ClienteModel(String cpf, String nome, String endereço, String dataNascimento, String email) {
+    public ClienteModel(String cpf, String nome, String endereço, String dataNascimento, String email, boolean status) {
         this.cpf = cpf;
         this.nome = nome;
         this.endereço = endereço;
         this.dataNascimento = dataNascimento;
         this.email = email;
+        this.status = status;
     }
 
-    public ClienteModel(int id, String cpf, String nome, String endereço, String dataNascimento, String email) {
+    public ClienteModel(int id, String cpf, String nome, String endereço, String dataNascimento, String email, boolean status) {
         this.id = id;
         this.cpf = cpf;
         this.nome = nome;
         this.endereço = endereço;
         this.dataNascimento = dataNascimento;
         this.email = email;
+        this.status = status;
     }
     
     // Getters e Setters
@@ -79,6 +82,14 @@ public class ClienteModel {
         return email;
     }
 
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -97,4 +108,9 @@ public class ClienteModel {
     public void excluirCliente(int id) {
         new DaoUsuario().excluirCliente(id);
     }
+    public ArrayList<ClienteModel> searchCliente(int id) {
+     JOptionPane.showMessageDialog(null, "chegando ate model");
+    return new DaoUsuario().searchModel(id);
+    }
+
 }
