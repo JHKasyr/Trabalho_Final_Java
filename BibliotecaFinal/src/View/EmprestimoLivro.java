@@ -5,7 +5,9 @@
 package View;
 
 import Controller.ClienteController;
+import Controller.LivroController;
 import Model.ClienteModel;
+import Model.LivroModel;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JOptionPane;
@@ -15,15 +17,18 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Aluno(a) TDS Noite
  */
-public class GestaoLivro extends javax.swing.JFrame {
+public class EmprestimoLivro extends javax.swing.JFrame {
 
     /**
      * Creates new form RetiradaLivro
      */
-    public GestaoLivro() {
+    public EmprestimoLivro() {
         initComponents();
+        
         ListarClientesView();
+        ListarLivrosView();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,9 +43,15 @@ public class GestaoLivro extends javax.swing.JFrame {
         panelTabelaLivro = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableLivro = new javax.swing.JTable();
+        btnEmprestarLivro = new javax.swing.JButton();
+        lblTitulo = new javax.swing.JLabel();
+        txtTitulo = new javax.swing.JLabel();
         panelTabelaCliente = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableCliente = new javax.swing.JTable();
+        btnEmprestarCliente = new javax.swing.JButton();
+        lblNome = new javax.swing.JLabel();
+        txtNome = new javax.swing.JLabel();
         panelFiltroLivro = new javax.swing.JPanel();
         lblIDLivro = new javax.swing.JLabel();
         txtIDLivro = new javax.swing.JTextField();
@@ -62,7 +73,7 @@ public class GestaoLivro extends javax.swing.JFrame {
         });
 
         lblRetirada.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        lblRetirada.setText("Gestão de Livros");
+        lblRetirada.setText("Empréstimo de Livros");
 
         panelTabelaLivro.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tabela Livro", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 18))); // NOI18N
 
@@ -81,7 +92,7 @@ public class GestaoLivro extends javax.swing.JFrame {
                 java.lang.Integer.class, java.lang.String.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -94,20 +105,42 @@ public class GestaoLivro extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tableLivro);
 
+        btnEmprestarLivro.setText("Emprestar");
+        btnEmprestarLivro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEmprestarLivroActionPerformed(evt);
+            }
+        });
+
+        lblTitulo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblTitulo.setText("Título:");
+
         javax.swing.GroupLayout panelTabelaLivroLayout = new javax.swing.GroupLayout(panelTabelaLivro);
         panelTabelaLivro.setLayout(panelTabelaLivroLayout);
         panelTabelaLivroLayout.setHorizontalGroup(
             panelTabelaLivroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTabelaLivroLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addGroup(panelTabelaLivroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTabelaLivroLayout.createSequentialGroup()
+                        .addComponent(lblTitulo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEmprestarLivro)))
                 .addContainerGap())
         );
         panelTabelaLivroLayout.setVerticalGroup(
             panelTabelaLivroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTabelaLivroLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelTabelaLivroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(txtTitulo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblTitulo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEmprestarLivro, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(7, 7, 7))
         );
 
         panelTabelaCliente.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 18))); // NOI18N
@@ -145,30 +178,56 @@ public class GestaoLivro extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tableCliente);
 
+        btnEmprestarCliente.setText("Emprestar");
+        btnEmprestarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEmprestarClienteActionPerformed(evt);
+            }
+        });
+
+        lblNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblNome.setText("Nome:");
+
         javax.swing.GroupLayout panelTabelaClienteLayout = new javax.swing.GroupLayout(panelTabelaCliente);
         panelTabelaCliente.setLayout(panelTabelaClienteLayout);
         panelTabelaClienteLayout.setHorizontalGroup(
             panelTabelaClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTabelaClienteLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2)
+                .addGroup(panelTabelaClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTabelaClienteLayout.createSequentialGroup()
+                        .addComponent(lblNome)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEmprestarCliente)))
                 .addContainerGap())
         );
         panelTabelaClienteLayout.setVerticalGroup(
             panelTabelaClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTabelaClienteLayout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelTabelaClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTabelaClienteLayout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(btnEmprestarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelTabelaClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(panelTabelaClienteLayout.createSequentialGroup()
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelTabelaClienteLayout.createSequentialGroup()
+                            .addGap(8, 8, 8)
+                            .addComponent(lblNome))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         panelFiltroLivro.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Filtro Livro", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 18))); // NOI18N
 
-        lblIDLivro.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblIDLivro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblIDLivro.setText("ID:");
 
-        txtIDLivro.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-
-        btnFiltrarLivro.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnFiltrarLivro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnFiltrarLivro.setText("Filtrar");
         btnFiltrarLivro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -186,34 +245,26 @@ public class GestaoLivro extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtIDLivro)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnFiltrarLivro)
+                .addComponent(btnFiltrarLivro, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         panelFiltroLivroLayout.setVerticalGroup(
             panelFiltroLivroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelFiltroLivroLayout.createSequentialGroup()
-                .addGroup(panelFiltroLivroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelFiltroLivroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtIDLivro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblIDLivro))
-                    .addComponent(btnFiltrarLivro))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(panelFiltroLivroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtIDLivro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblIDLivro)
+                    .addComponent(btnFiltrarLivro, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 10, Short.MAX_VALUE))
         );
 
         panelFiltroCliente.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Filtro Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 18))); // NOI18N
         panelFiltroCliente.setPreferredSize(new java.awt.Dimension(10, 132));
 
-        lblIDCliente.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblIDCliente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblIDCliente.setText("ID:");
 
-        txtIDCliente.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtIDCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIDClienteActionPerformed(evt);
-            }
-        });
-
-        btnFiltrarCliente.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnFiltrarCliente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnFiltrarCliente.setText("Filtrar");
         btnFiltrarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -240,8 +291,8 @@ public class GestaoLivro extends javax.swing.JFrame {
                 .addGroup(panelFiltroClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblIDCliente)
                     .addComponent(txtIDCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFiltrarCliente))
-                .addGap(0, 5, Short.MAX_VALUE))
+                    .addComponent(btnFiltrarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -251,22 +302,18 @@ public class GestaoLivro extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(btnVoltar))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(150, 150, 150)
-                                .addComponent(lblRetirada)))
-                        .addGap(0, 167, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(panelTabelaCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(panelTabelaLivro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(panelFiltroLivro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(panelFiltroCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE))))
-                .addContainerGap())
+                            .addComponent(btnVoltar)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(panelTabelaCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(panelTabelaLivro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(panelFiltroCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
+                                .addComponent(panelFiltroLivro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(117, 117, 117)
+                        .addComponent(lblRetirada)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -278,9 +325,9 @@ public class GestaoLivro extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelFiltroLivro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelTabelaLivro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelTabelaLivro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelFiltroCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelFiltroCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelTabelaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -294,29 +341,47 @@ public class GestaoLivro extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnVoltarActionPerformed
 
+    private void btnEmprestarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmprestarClienteActionPerformed
+        int selectedRowIndex = tableLivro.getSelectedRow();
+    if (selectedRowIndex == -1) {
+        JOptionPane.showMessageDialog(null, "Selecione um livro para emprestar.");
+        return;
+    }
+    
+    int livroId = (int) tableLivro.getValueAt(selectedRowIndex, 0); // Obtém o ID do livro selecionado
+    boolean statusLivro = (boolean) tableLivro.getValueAt(selectedRowIndex, 2); // Obtém o status do livro
+    
+    // Verifica se o livro já está emprestado
+    if (statusLivro) {
+        JOptionPane.showMessageDialog(null, "O livro selecionado já está emprestado.");
+        return;
+    }
+    
+    // Verifica se um cliente foi selecionado
+    int clienteSelectedRowIndex = tableCliente.getSelectedRow();
+    if (clienteSelectedRowIndex == -1) {
+        JOptionPane.showMessageDialog(null, "Selecione um cliente para emprestar o livro.");
+        return;
+    }
+    
+    int clienteId = (int) tableCliente.getValueAt(clienteSelectedRowIndex, 0); // Obtém o ID do cliente selecionado
+    
+    // Realiza o empréstimo do livro para o cliente
+    LivroController livroController = new LivroController();
+    livroController.emprestarLivroModel(clienteId, livroId);
+    
+    // Atualiza a tabela de livros após o empréstimo
+    ListarLivrosView();
+    
+    JOptionPane.showMessageDialog(null, "Livro emprestado com sucesso!");
+    }//GEN-LAST:event_btnEmprestarClienteActionPerformed
+
+    private void btnEmprestarLivroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmprestarLivroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEmprestarLivroActionPerformed
+
     private void btnFiltrarLivroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarLivroActionPerformed
-         //int itemPesquisa = Integer.parseInt(txtIDCliente.getText());
-         
-         String itemPesquisa = txtIDCliente.getText();
-        try {
-            DefaultTableModel dtm = (DefaultTableModel) tableCliente.getModel();
-            dtm.setRowCount(0);
-            ClienteController clienteController = new ClienteController();
-            
-            ArrayList<ClienteModel> listaCliente = clienteController.searchCliente(itemPesquisa);
-            Iterator<ClienteModel> iteratorCliente = listaCliente.iterator();
-            while (iteratorCliente.hasNext()) {
-                ClienteModel cliente = iteratorCliente.next();
-                dtm.addRow(new Object[]{
-                    cliente.getId(),
-                    cliente.getNome(),
-                    cliente.isStatus()
-                });
-            }
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "deu merda");
-        }
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnFiltrarLivroActionPerformed
 
     private void btnFiltrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarClienteActionPerformed
@@ -342,27 +407,76 @@ public class GestaoLivro extends javax.swing.JFrame {
             }
             
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "deu merda"+e);
+            JOptionPane.showMessageDialog(null, "erro ao filtrar "+e);
         }
     }//GEN-LAST:event_btnFiltrarClienteActionPerformed
 
-    private void txtIDClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDClienteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtIDClienteActionPerformed
-
     private void tableClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableClienteMouseClicked
-        int id = Integer.parseInt(tableCliente.getModel().getValueAt(tableCliente.getSelectedRow(), 1).toString());
-        String nome = tableCliente.getModel().getValueAt(tableCliente.getSelectedRow(), 2).toString();
-        String statusString = tableCliente.getModel().getValueAt(tableCliente.getSelectedRow(), 3).toString();
-        boolean status;
-        if(statusString != null && !statusString.isEmpty()){
-            status = true;
-        }else{
-            status = false;
-        }
+//        int id = Integer.parseInt(tableCliente.getModel().getValueAt(tableCliente.getSelectedRow(), 1).toString());
+//        String statusString = tableCliente.getModel().getValueAt(tableCliente.getSelectedRow(), 3).toString();
+//        boolean status;
+//        if(statusString != null && !statusString.isEmpty()){
+//            status = true;
+//        }else{
+//            status = false;
+//        }
+//        EmprestimoLivro filtroPessoa = new EmprestimoLivro();
+//        filtroPessoa.emprestarLivroCliente(id,status);
+//        
+        
     }//GEN-LAST:event_tableClienteMouseClicked
 
-     void ListarClientesView() {
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(EmprestimoLivro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(EmprestimoLivro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(EmprestimoLivro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(EmprestimoLivro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new EmprestimoLivro().setVisible(true);
+            }
+        });
+    }
+    
+    void ListarClientesView() {
         try {
             DefaultTableModel dtm = (DefaultTableModel) tableCliente.getModel();
             dtm.setRowCount(0);
@@ -384,43 +498,38 @@ public class GestaoLivro extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+    
+        void ListarLivrosView() {
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GestaoLivro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GestaoLivro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GestaoLivro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GestaoLivro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+            DefaultTableModel dtm = (DefaultTableModel) tableLivro.getModel();
+            dtm.setRowCount(0);
+            LivroController livroController = new LivroController();
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GestaoLivro().setVisible(true);
+            ArrayList<LivroModel> listaLivro = livroController.listarLivrosController();
+
+            Iterator<LivroModel> iterator = listaLivro.iterator();
+            while (iterator.hasNext()) {
+                LivroModel livro = iterator.next();
+                dtm.addRow(new Object[]{
+                    livro.getId(),
+                    livro.getTitulo(),
+                    livro.isStatus()
+                });
+                        
             }
-        });
+
+        } catch (Exception e) {
+        }
     }
+//        private void emprestarLivroCliente(int id, boolean status){
+//            ClienteController emprestarLivroCliente = new ClienteController();
+//            emprestarLivroCliente.emprestarLivroController(id, status);
+//            
+//        }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEmprestarCliente;
+    private javax.swing.JButton btnEmprestarLivro;
     private javax.swing.JButton btnFiltrarCliente;
     private javax.swing.JButton btnFiltrarLivro;
     private javax.swing.JButton btnVoltar;
@@ -428,7 +537,9 @@ public class GestaoLivro extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblIDCliente;
     private javax.swing.JLabel lblIDLivro;
+    private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblRetirada;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel panelFiltroCliente;
     private javax.swing.JPanel panelFiltroLivro;
     private javax.swing.JPanel panelTabelaCliente;
@@ -437,5 +548,7 @@ public class GestaoLivro extends javax.swing.JFrame {
     private javax.swing.JTable tableLivro;
     private javax.swing.JTextField txtIDCliente;
     private javax.swing.JTextField txtIDLivro;
+    private javax.swing.JLabel txtNome;
+    private javax.swing.JLabel txtTitulo;
     // End of variables declaration//GEN-END:variables
 }

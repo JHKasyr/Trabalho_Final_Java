@@ -108,9 +108,13 @@ public class ClienteModel {
     public void excluirCliente(int id) {
         new DaoUsuario().excluirCliente(id);
     }
-    public ArrayList<ClienteModel> searchCliente(int id) {
-     JOptionPane.showMessageDialog(null, "chegando ate model");
+    public ArrayList<ClienteModel> searchCliente(String id) {
     return new DaoUsuario().searchModel(id);
     }
+    public void emprestarLivroModel(int clienteId, int livroId){
+        new DaoUsuario().emprestarLivro(clienteId, livroId);
+        
+    }
+    
 
 }

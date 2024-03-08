@@ -162,8 +162,10 @@ public class DaoUsuario {
             JOptionPane.showMessageDialog(null, "Erro ao realizar exclusão de dados " + e);
         }
     }
-        public ArrayList<ClienteModel> searchModel(int id) {
+        public ArrayList<ClienteModel> searchModel(String id) {
 
+            
+            System.out.println("Valor do ID: " + id);
         ResultSet rs = null;
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -171,7 +173,7 @@ public class DaoUsuario {
         ClienteModel cliente = null;
         ArrayList<ClienteModel> listaClientes = null;
 
-        String sql = "SELECT codigo, nome, status FROM ROOT.USUARIO WHERE codigo LIKE '%"+id+"%' ORDER BY codigo";
+        String sql = "SELECT * FROM ROOT.USUARIO WHERE nome LIKE '%"+ id +"%' ORDER BY nome";
 
         try {
             conn = new ConexaoDaoUsuario().getConnection();
@@ -183,11 +185,24 @@ public class DaoUsuario {
                     cliente = new ClienteModel();
                     cliente.setId(rs.getInt("codigo"));
                     cliente.setNome(rs.getString("nome"));
-                    cliente.setStatus(rs.getBoolean("status"));
+                    String statusString = rs.getString("status");
+                    boolean status;
+    
+    if (statusString != null && !statusString.isEmpty()) {
+        // Se o campo status não for nulo e não estiver vazio, 
+        // então assumimos que ele contém um valor verdadeiro
+        status = true;
+    } else {
+        // Se o campo status for nulo ou vazio, 
+        // então assumimos que ele contém um valor falso
+        status = false;
+    }
+    
+    cliente.setStatus(status);
+                    
                     listaClientes.add(cliente);
                 }
             }
-            JOptionPane.showMessageDialog(null, "chegando ate dao");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Erro ao realizar regitro!");
@@ -212,4 +227,21 @@ public class DaoUsuario {
         }
         return listaClientes;
     }
+        public void emprestarLivro(int idCliente, int idLivro){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        String sql = "UPDATE FROM ROOT.usuario SET status = true WHERE id=?";
+
+        try {
+            conn = new ConexaoDaoUsuario().getConnection();
+            stmt = conn.prepareStatement(sql);
+            stmt.setBoolean(7,status);
+            stmt.execute();
+            JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao realizar exclusão de dados " + e);
+        }
+        }
 }

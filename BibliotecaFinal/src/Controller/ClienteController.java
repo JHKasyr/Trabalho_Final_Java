@@ -45,9 +45,44 @@ public class ClienteController {
         JOptionPane.showMessageDialog(null, "chgando ate controller cliente");
     }
     
-        public ArrayList<ClienteModel> searchClient(int id){
+        public ArrayList<ClienteModel> searchCliente(String id){
         ClienteModel contato = new ClienteModel();
-        JOptionPane.showMessageDialog(null, "chegando até controller");
         return contato.searchCliente(id);
+        
+
     }
+        public void emprestarLivroController(int id, Boolean status){
+             try {
+            // Buscar o cliente pelo ID
+            ClienteModel cliente = ClienteDAO.buscarClientePorId(clienteId);
+            if (cliente == null) {
+                System.out.println("Cliente não encontrado com o ID: " + clienteId);
+                return;
+            }
+            
+            // Buscar o livro pelo ID
+            LivroModel livro = LivroDAO.buscarLivroPorId(livroId);
+            if (livro == null) {
+                System.out.println("Livro não encontrado com o ID: " + livroId);
+                return;
+            }
+            
+            // Verificar se o livro já está emprestado
+            if (livro.isStatusEmprestado()) {
+                System.out.println("O livro já está emprestado.");
+                return;
+            }
+            
+            // Alterar o status do livro para emprestado
+            livro.setStatusEmprestado(true);
+            LivroDAO.atualizarLivro(livro);
+            
+            // Aqui você também pode implementar outras ações, como atualizar o status do cliente
+            
+            System.out.println("Livro emprestado com sucesso para o cliente com ID: " + clienteId);
+        } catch (Exception e) {
+            System.out.println("Erro ao emprestar livro: " + e.getMessage());
+        }
+    }
+        }
 }
